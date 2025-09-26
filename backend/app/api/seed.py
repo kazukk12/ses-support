@@ -6,7 +6,7 @@ from ..models.employee import Employee, Skill, Availability, OneOnOne, Availabil
 
 router = APIRouter()
 
-@router.post("/demo-data")
+@router.get("/demo-data")
 def create_demo_data(db: Session = Depends(get_db)):
     """
     デモ用テストデータを投入するAPI
@@ -210,6 +210,27 @@ def create_demo_data(db: Session = Depends(get_db)):
     except Exception as e:
         db.rollback()
         raise HTTPException(status_code=500, detail=f"データ投入エラー: {str(e)}")
+
+
+@router.get("/reset-data")
+def reset_data(db: Session = Depends(get_db)):
+    """
+    全データをクリアするAPI
+    """
+    try:
+        db.query(OneOnOne).delete()
+        db.query(Availability).delete()
+        db.query(Employee).delete()
+        db.query(Skill).delete()
+        db.commit()
+
+        return {
+            "message": "🗑️ 全データがクリアされました！",
+            "status": "success"
+        }
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=500, detail=f"データクリアエラー: {str(e)}")
 
 
 @router.get("/status")
