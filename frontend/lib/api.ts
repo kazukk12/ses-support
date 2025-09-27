@@ -21,16 +21,26 @@ async function apiRequest<T>(
     ...options,
   };
 
+  console.log('Making API request to:', url);
+  console.log('Request config:', config);
+
   try {
     const response = await fetch(url, config);
 
+    console.log('Response status:', response.status);
+    console.log('Response headers:', response.headers);
+
     if (!response.ok) {
-      throw new ApiError(response.status, `HTTP error! status: ${response.status}`);
+      const errorText = await response.text();
+      console.log('Error response text:', errorText);
+      throw new ApiError(response.status, `HTTP error! status: ${response.status}, message: ${errorText}`);
     }
 
     const data = await response.json();
+    console.log('Success response data:', data);
     return data;
   } catch (error) {
+    console.log('Fetch error details:', error);
     if (error instanceof ApiError) {
       throw error;
     }
