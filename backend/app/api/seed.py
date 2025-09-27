@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
+from sqlalchemy import text
 from datetime import date
 from ..db.database import get_db, engine
 from ..db.database import Base
@@ -37,7 +38,7 @@ def create_demo_data(db: Session = Depends(get_db)):
         db.query(Availability).delete()
 
         # 多対多の関連テーブルをクリア
-        db.execute("DELETE FROM employee_skills")
+        db.execute(text("DELETE FROM employee_skills"))
 
         db.query(Employee).delete()
         db.query(Skill).delete()
@@ -247,7 +248,7 @@ def reset_data(db: Session = Depends(get_db)):
         db.query(Availability).delete()
 
         # 多対多の関連テーブルをクリア
-        db.execute("DELETE FROM employee_skills")
+        db.execute(text("DELETE FROM employee_skills"))
 
         db.query(Employee).delete()
         db.query(Skill).delete()
