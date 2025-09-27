@@ -19,7 +19,7 @@ export default function EmployeeDetailPage({ params }: EmployeeDetailPageProps) 
 
   const { data: employee, isLoading } = useQuery<Employee>({
     queryKey: ['employee', employeeId],
-    queryFn: () => api.employees.getById(employeeId)(),
+    queryFn: () => api.employees.getById(employeeId),
   })
 
   if (isLoading) {
