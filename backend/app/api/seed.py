@@ -202,13 +202,13 @@ def create_demo_data(db: Session = Depends(get_db)):
 
         # 1on1データ
         oneonone_data = [
-            {"employee_id": 1, "date": date(2024, 1, 15), "status": OneOnOneStatus.GOOD, "memo": "順調にプロジェクトを進めている"},
-            {"employee_id": 2, "date": date(2024, 1, 18), "status": OneOnOneStatus.ATTENTION, "memo": "技術的な課題で悩んでいる様子"},
-            {"employee_id": 3, "date": date(2024, 1, 20), "status": OneOnOneStatus.NORMAL, "memo": "特に問題なし"},
-            {"employee_id": 4, "date": date(2024, 1, 22), "status": OneOnOneStatus.GOOD, "memo": "新しい技術の習得に意欲的"},
-            {"employee_id": 1, "date": date(2024, 2, 15), "status": OneOnOneStatus.NORMAL, "memo": "前回の課題は解決済み"},
-            {"employee_id": 2, "date": date(2024, 2, 18), "status": OneOnOneStatus.GOOD, "memo": "技術的な課題を克服し成長している"},
-            {"employee_id": 5, "date": date(2024, 2, 20), "status": OneOnOneStatus.ATTENTION, "memo": "モチベーション低下気味"},
+            {"employee_id": 1, "date": date(2025, 9, 15), "status": OneOnOneStatus.GOOD, "memo": "順調にプロジェクトを進めている"},
+            {"employee_id": 2, "date": date(2025, 9, 18), "status": OneOnOneStatus.ATTENTION, "memo": "技術的な課題で悩んでいる様子"},
+            {"employee_id": 3, "date": date(2025, 9, 20), "status": OneOnOneStatus.NORMAL, "memo": "特に問題なし"},
+            {"employee_id": 4, "date": date(2025, 9, 22), "status": OneOnOneStatus.GOOD, "memo": "新しい技術の習得に意欲的"},
+            {"employee_id": 1, "date": date(2025, 8, 15), "status": OneOnOneStatus.NORMAL, "memo": "前回の課題は解決済み"},
+            {"employee_id": 2, "date": date(2025, 8, 18), "status": OneOnOneStatus.GOOD, "memo": "技術的な課題を克服し成長している"},
+            {"employee_id": 5, "date": date(2025, 9, 25), "status": OneOnOneStatus.ATTENTION, "memo": "モチベーション低下気味"},
         ]
 
         for ono_data in oneonone_data:
