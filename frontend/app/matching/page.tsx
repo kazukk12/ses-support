@@ -342,9 +342,9 @@ export default function MatchingPage() {
                     </div>
 
                     <div className="mt-3 flex gap-2">
-                      <Button size="sm" asChild>
-                        <Link href={`/employees/${result.employee.id}`}>詳細を見る</Link>
-                      </Button>
+                      <Link href={`/employees/${result.employee.id}`}>
+                        <Button size="sm">詳細を見る</Button>
+                      </Link>
                     </div>
                   </div>
                 ))}

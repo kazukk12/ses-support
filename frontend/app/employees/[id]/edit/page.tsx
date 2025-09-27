@@ -147,8 +147,8 @@ export default function EditEmployeePage({ params }: EditEmployeePageProps) {
     return (
       <div className="text-center py-12">
         <p className="text-muted-foreground">社員が見つかりませんでした。</p>
-        <Button asChild className="mt-4">
-          <a href="/employees">一覧に戻る</a>
+        <Button className="mt-4" onClick={() => window.location.href = '/employees'}>
+          一覧に戻る
         </Button>
       </div>
     )

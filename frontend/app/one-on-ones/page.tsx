@@ -195,12 +195,16 @@ export default function OneOnOnesPage() {
                   )}
                 </div>
                 <div className="flex flex-row sm:flex-col gap-2 sm:ml-4">
-                  <Button variant="outline" size="sm" className="border-brand-200 text-brand-700 hover:bg-brand-50 hover:border-brand-300 transition-colors duration-200 flex-1 sm:flex-none" asChild>
-                    <Link href={`/one-on-ones/${oneOnOne.id}/edit`}>編集</Link>
-                  </Button>
-                  <Button variant="outline" size="sm" className="border-gray-200 text-gray-700 hover:bg-gray-50 hover:border-gray-300 transition-colors duration-200 flex-1 sm:flex-none" asChild>
-                    <Link href={`/employees/${oneOnOne.employee_id}`}>社員詳細</Link>
-                  </Button>
+                  <Link href={`/one-on-ones/${oneOnOne.id}/edit`}>
+                    <Button variant="outline" size="sm" className="border-brand-200 text-brand-700 hover:bg-brand-50 hover:border-brand-300 transition-colors duration-200 flex-1 sm:flex-none">
+                      編集
+                    </Button>
+                  </Link>
+                  <Link href={`/employees/${oneOnOne.employee_id}`}>
+                    <Button variant="outline" size="sm" className="border-gray-200 text-gray-700 hover:bg-gray-50 hover:border-gray-300 transition-colors duration-200 flex-1 sm:flex-none">
+                      社員詳細
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </CardContent>
