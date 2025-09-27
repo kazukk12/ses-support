@@ -25,7 +25,7 @@ export default function NewOneOnOnePage() {
 
   const { data: employees, isLoading: employeesLoading } = useQuery<EmployeeList[]>({
     queryKey: ['employees'],
-    queryFn: api.employees.getAll,
+    queryFn: () => api.employees.getAll(),
   })
 
   const createMutation = useMutation({

@@ -24,12 +24,12 @@ export default function EditOneOnOnePage() {
 
   const { data: oneOnOne, isLoading: oneOnOneLoading } = useQuery({
     queryKey: ['one-on-one', oneOnOneId],
-    queryFn: () => api.oneOnOnes.getById(parseInt(oneOnOneId)),
+    queryFn: () => api.oneOnOnes.getById(parseInt(oneOnOneId))(),
   })
 
   const { data: employees, isLoading: employeesLoading } = useQuery<EmployeeList[]>({
     queryKey: ['employees'],
-    queryFn: api.employees.getAll,
+    queryFn: () => api.employees.getAll(),
   })
 
   const updateMutation = useMutation({

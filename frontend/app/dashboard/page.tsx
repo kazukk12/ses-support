@@ -21,12 +21,12 @@ export default function DashboardPage() {
 
   const { data: stats, isLoading: statsLoading } = useQuery<DashboardStats>({
     queryKey: ['dashboard', 'stats'],
-    queryFn: api.dashboard.getStats,
+    queryFn: () => api.dashboard.getStats(),
   })
 
   const { data: skillDistribution, isLoading: skillsLoading } = useQuery<SkillDistribution[]>({
     queryKey: ['dashboard', 'skills'],
-    queryFn: api.dashboard.getSkillDistribution,
+    queryFn: () => api.dashboard.getSkillDistribution(),
   })
 
   const { data: detailedSkills, isLoading: detailedLoading } = useQuery({

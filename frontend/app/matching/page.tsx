@@ -27,7 +27,7 @@ export default function MatchingPage() {
 
   const { data: skills } = useQuery<Skill[]>({
     queryKey: ['skills'],
-    queryFn: api.skills.getAll,
+    queryFn: () => api.skills.getAll(),
   })
 
   const matchingMutation = useMutation<ProjectMatchingResult[], Error, ProjectMatchingRequest>({

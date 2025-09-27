@@ -32,7 +32,7 @@ export default function NewEmployeePage() {
 
   const { data: skills, isLoading: skillsLoading } = useQuery<Skill[]>({
     queryKey: ['skills'],
-    queryFn: api.skills.getAll,
+    queryFn: () => api.skills.getAll(),
   })
 
   const createMutation = useMutation({

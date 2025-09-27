@@ -40,12 +40,12 @@ export default function EmployeesPage() {
 
   const { data: employees, isLoading } = useQuery<EmployeeList[]>({
     queryKey: ['employees'],
-    queryFn: api.employees.getAll,
+    queryFn: () => api.employees.getAll(),
   })
 
   const { data: allSkills } = useQuery<any[]>({
     queryKey: ['skills'],
-    queryFn: api.skills.getAll,
+    queryFn: () => api.skills.getAll(),
   })
 
   // スキル検索のフィルタリング

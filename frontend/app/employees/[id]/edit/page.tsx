@@ -42,7 +42,7 @@ export default function EditEmployeePage({ params }: EditEmployeePageProps) {
 
   const { data: skills, isLoading: skillsLoading } = useQuery<Skill[]>({
     queryKey: ['skills'],
-    queryFn: api.skills.getAll,
+    queryFn: () => api.skills.getAll(),
   })
 
   useEffect(() => {

@@ -31,7 +31,7 @@ export default function OneOnOnesPage() {
 
   const { data: oneOnOnes, isLoading } = useQuery<(OneOnOne & { employee_name: string })[]>({
     queryKey: ['one-on-ones'],
-    queryFn: api.oneOnOnes.getAll,
+    queryFn: () => api.oneOnOnes.getAll(),
   })
 
   const filteredOneOnOnes = oneOnOnes?.filter(oneOnOne => {
@@ -50,7 +50,7 @@ export default function OneOnOnesPage() {
 
   const completionRateQuery = useQuery({
     queryKey: ['completion-rate'],
-    queryFn: api.oneOnOnes.getCompletionRate,
+    queryFn: () => api.oneOnOnes.getCompletionRate(),
   })
 
   if (isLoading) {
