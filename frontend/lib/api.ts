@@ -1,4 +1,10 @@
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://web-production-d8582.up.railway.app';
+
+// デバッグ用
+console.log('=== API Configuration Debug ===');
+console.log('process.env.NEXT_PUBLIC_API_URL:', process.env.NEXT_PUBLIC_API_URL);
+console.log('Final API_BASE_URL:', API_BASE_URL);
+console.log('================================');
 
 class ApiError extends Error {
   constructor(public status: number, message: string) {
