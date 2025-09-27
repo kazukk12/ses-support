@@ -227,13 +227,17 @@ def create_demo_data(db: Session = Depends(get_db)):
 
         db.commit()
 
+        # 投入件数をカウント
+        availability_count = len([emp for emp in employees[:8]])  # 最初の8人分
+        oneonone_count = 7 if len(employees) >= 5 else 0  # 1on1データの件数
+
         return {
             "message": "✅ デモデータの投入が完了しました！",
             "data": {
                 "employees": len(employees),
                 "skills": len(skills),
-                "availability": len(availability_data),
-                "one_on_ones": len(oneonone_data)
+                "availability": availability_count,
+                "one_on_ones": oneonone_count
             }
         }
 
