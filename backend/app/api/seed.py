@@ -1,10 +1,27 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from datetime import date
-from ..db.database import get_db
+from ..db.database import get_db, engine
+from ..db.database import Base
 from ..models.employee import Employee, Skill, Availability, OneOnOne, AvailabilityStatus, OneOnOneStatus
 
 router = APIRouter()
+
+@router.get("/init-db")
+def init_database():
+    """
+    データベーステーブルを作成するAPI
+    """
+    try:
+        # テーブル作成
+        Base.metadata.create_all(bind=engine)
+        return {
+            "message": "🗄️ データベーステーブルが作成されました！",
+            "status": "success"
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"テーブル作成エラー: {str(e)}")
+
 
 @router.get("/demo-data")
 def create_demo_data(db: Session = Depends(get_db)):
@@ -12,6 +29,9 @@ def create_demo_data(db: Session = Depends(get_db)):
     デモ用テストデータを投入するAPI
     """
     try:
+        # テーブル作成（存在しない場合）
+        Base.metadata.create_all(bind=engine)
+
         # 既存データをクリア
         db.query(OneOnOne).delete()
         db.query(Availability).delete()
