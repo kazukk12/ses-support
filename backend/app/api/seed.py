@@ -187,38 +187,43 @@ def create_demo_data(db: Session = Depends(get_db)):
 
         db.commit()
 
-        # アベイラビリティデータ
-        availability_data = [
-            {"employee_id": 1, "status": AvailabilityStatus.WORKING},
-            {"employee_id": 2, "status": AvailabilityStatus.AVAILABLE_NEXT_MONTH},
-            {"employee_id": 3, "status": AvailabilityStatus.IMMEDIATELY_AVAILABLE},
-            {"employee_id": 4, "status": AvailabilityStatus.WORKING},
-            {"employee_id": 5, "status": AvailabilityStatus.AVAILABLE_NEXT_MONTH},
-            {"employee_id": 6, "status": AvailabilityStatus.IMMEDIATELY_AVAILABLE},
-            {"employee_id": 7, "status": AvailabilityStatus.WORKING},
-            {"employee_id": 8, "status": AvailabilityStatus.AVAILABLE_NEXT_MONTH},
+        # アベイラビリティデータ（実際のemployee.idを使用）
+        availability_statuses = [
+            AvailabilityStatus.WORKING,
+            AvailabilityStatus.AVAILABLE_NEXT_MONTH,
+            AvailabilityStatus.IMMEDIATELY_AVAILABLE,
+            AvailabilityStatus.WORKING,
+            AvailabilityStatus.AVAILABLE_NEXT_MONTH,
+            AvailabilityStatus.IMMEDIATELY_AVAILABLE,
+            AvailabilityStatus.WORKING,
+            AvailabilityStatus.AVAILABLE_NEXT_MONTH,
         ]
 
-        for avail_data in availability_data:
-            availability = Availability(**avail_data)
-            db.add(availability)
+        for i, employee in enumerate(employees[:8]):  # 最初の8人分のアベイラビリティ
+            if i < len(availability_statuses):
+                availability = Availability(
+                    employee_id=employee.id,
+                    status=availability_statuses[i]
+                )
+                db.add(availability)
 
         db.commit()
 
-        # 1on1データ
-        oneonone_data = [
-            {"employee_id": 1, "date": date(2025, 9, 15), "status": OneOnOneStatus.GOOD, "memo": "順調にプロジェクトを進めている"},
-            {"employee_id": 2, "date": date(2025, 9, 18), "status": OneOnOneStatus.ATTENTION, "memo": "技術的な課題で悩んでいる様子"},
-            {"employee_id": 3, "date": date(2025, 9, 20), "status": OneOnOneStatus.NORMAL, "memo": "特に問題なし"},
-            {"employee_id": 4, "date": date(2025, 9, 22), "status": OneOnOneStatus.GOOD, "memo": "新しい技術の習得に意欲的"},
-            {"employee_id": 1, "date": date(2025, 8, 15), "status": OneOnOneStatus.NORMAL, "memo": "前回の課題は解決済み"},
-            {"employee_id": 2, "date": date(2025, 8, 18), "status": OneOnOneStatus.GOOD, "memo": "技術的な課題を克服し成長している"},
-            {"employee_id": 5, "date": date(2025, 9, 25), "status": OneOnOneStatus.ATTENTION, "memo": "モチベーション低下気味"},
-        ]
+        # 1on1データ（実際のemployee.idを使用）
+        if len(employees) >= 5:  # 最低5人必要
+            oneonone_data = [
+                {"employee_id": employees[0].id, "date": date(2025, 9, 15), "status": OneOnOneStatus.GOOD, "memo": "順調にプロジェクトを進めている"},
+                {"employee_id": employees[1].id, "date": date(2025, 9, 18), "status": OneOnOneStatus.ATTENTION, "memo": "技術的な課題で悩んでいる様子"},
+                {"employee_id": employees[2].id, "date": date(2025, 9, 20), "status": OneOnOneStatus.NORMAL, "memo": "特に問題なし"},
+                {"employee_id": employees[3].id, "date": date(2025, 9, 22), "status": OneOnOneStatus.GOOD, "memo": "新しい技術の習得に意欲的"},
+                {"employee_id": employees[0].id, "date": date(2025, 8, 15), "status": OneOnOneStatus.NORMAL, "memo": "前回の課題は解決済み"},
+                {"employee_id": employees[1].id, "date": date(2025, 8, 18), "status": OneOnOneStatus.GOOD, "memo": "技術的な課題を克服し成長している"},
+                {"employee_id": employees[4].id, "date": date(2025, 9, 25), "status": OneOnOneStatus.ATTENTION, "memo": "モチベーション低下気味"},
+            ]
 
-        for ono_data in oneonone_data:
-            oneonone = OneOnOne(**ono_data)
-            db.add(oneonone)
+            for ono_data in oneonone_data:
+                oneonone = OneOnOne(**ono_data)
+                db.add(oneonone)
 
         db.commit()
 
