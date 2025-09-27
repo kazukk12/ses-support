@@ -47,7 +47,7 @@ export default function MatchingPage() {
     setSearchCriteria(prev => ({
       ...prev,
       [type === 'required' ? 'required_skills' : 'preferred_skills']: [
-        ...prev[type === 'required' ? 'required_skills' : 'preferred_skills'],
+        ...(prev[type === 'required' ? 'required_skills' : 'preferred_skills'] || []),
         skill.trim()
       ]
     }))
@@ -63,7 +63,7 @@ export default function MatchingPage() {
     setSearchCriteria(prev => ({
       ...prev,
       [type === 'required' ? 'required_skills' : 'preferred_skills']:
-        prev[type === 'required' ? 'required_skills' : 'preferred_skills'].filter(s => s !== skill)
+        (prev[type === 'required' ? 'required_skills' : 'preferred_skills'] || []).filter(s => s !== skill)
     }))
   }
 
