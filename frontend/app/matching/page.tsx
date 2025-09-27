@@ -68,7 +68,7 @@ export default function MatchingPage() {
   }
 
   const handleSearch = () => {
-    if (searchCriteria.required_skills.length === 0) {
+    if ((searchCriteria.required_skills || []).length === 0) {
       alert('必須スキルを1つ以上指定してください。')
       return
     }
@@ -144,7 +144,7 @@ export default function MatchingPage() {
                 </Button>
               </div>
               <div className="flex flex-wrap gap-1 mt-2">
-                {searchCriteria.required_skills.map((skill, index) => (
+                {(searchCriteria.required_skills || []).map((skill, index) => (
                   <span
                     key={index}
                     className="px-2 py-1 bg-brand-100 text-brand-800 text-xs rounded flex items-center gap-1"
@@ -184,7 +184,7 @@ export default function MatchingPage() {
                 </Button>
               </div>
               <div className="flex flex-wrap gap-1 mt-2">
-                {searchCriteria.preferred_skills.map((skill, index) => (
+                {(searchCriteria.preferred_skills || []).map((skill, index) => (
                   <span
                     key={index}
                     className="px-2 py-1 bg-gray-100 text-gray-800 text-xs rounded flex items-center gap-1"
