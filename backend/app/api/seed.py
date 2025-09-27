@@ -32,9 +32,13 @@ def create_demo_data(db: Session = Depends(get_db)):
         # テーブル作成（存在しない場合）
         Base.metadata.create_all(bind=engine)
 
-        # 既存データをクリア
+        # 既存データをクリア（外部キー制約を考慮した順序）
         db.query(OneOnOne).delete()
         db.query(Availability).delete()
+
+        # 多対多の関連テーブルをクリア
+        db.execute("DELETE FROM employee_skills")
+
         db.query(Employee).delete()
         db.query(Skill).delete()
         db.commit()
@@ -238,8 +242,13 @@ def reset_data(db: Session = Depends(get_db)):
     全データをクリアするAPI
     """
     try:
+        # 外部キー制約を考慮した順序でデータクリア
         db.query(OneOnOne).delete()
         db.query(Availability).delete()
+
+        # 多対多の関連テーブルをクリア
+        db.execute("DELETE FROM employee_skills")
+
         db.query(Employee).delete()
         db.query(Skill).delete()
         db.commit()
