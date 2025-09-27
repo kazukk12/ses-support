@@ -38,10 +38,18 @@ export default function EmployeesPage() {
     }
   }, [searchParams])
 
-  const { data: employees, isLoading } = useQuery<EmployeeList[]>({
+  const { data: employees, isLoading, error } = useQuery<EmployeeList[]>({
     queryKey: ['employees'],
-    queryFn: () => api.employees.getAll(),
+    queryFn: () => {
+      console.log('API_BASE_URL:', process.env.NEXT_PUBLIC_API_URL)
+      return api.employees.getAll()
+    },
   })
+
+  // デバッグ情報をコンソールに出力
+  console.log('employees data:', employees)
+  console.log('isLoading:', isLoading)
+  console.log('error:', error)
 
   const { data: allSkills } = useQuery<any[]>({
     queryKey: ['skills'],
@@ -89,6 +97,16 @@ export default function EmployeesPage() {
     return (
       <div className="flex justify-center items-center h-64">
         <div>読み込み中...</div>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <div className="text-red-500">
+          エラーが発生しました: {error.message}
+        </div>
       </div>
     )
   }
