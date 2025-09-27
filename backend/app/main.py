@@ -10,14 +10,8 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000",
-        "http://127.0.0.1:3000",
-        "https://ses-support.vercel.app",
-        "https://*.vercel.app",
-        "https://*.railway.app"
-    ],
-    allow_credentials=True,
+    allow_origins=["*"],  # 一時的に全て許可
+    allow_credentials=False,  # 全て許可する場合はFalseにする必要がある
     allow_methods=["*"],
     allow_headers=["*"],
 )
