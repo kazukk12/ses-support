@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from .api import employees, skills, projects, availability, one_on_ones, dashboard, seed
+from .api import employees, skills, projects, availability, one_on_ones, dashboard, seed, auth
 
 app = FastAPI(
     title="SES Support API",
@@ -16,6 +16,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(auth.router, prefix="/api/auth", tags=["auth"])
 app.include_router(employees.router, prefix="/api/employees", tags=["employees"])
 app.include_router(skills.router, prefix="/api/skills", tags=["skills"])
 app.include_router(projects.router, prefix="/api/projects", tags=["projects"])

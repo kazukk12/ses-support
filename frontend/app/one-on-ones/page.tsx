@@ -10,6 +10,7 @@ import { BarChart3, Calendar, MessageCircle } from 'lucide-react'
 import { api } from '@/lib/api'
 import { OneOnOne } from '@/types'
 import { formatDate, oneOnOneStatusLabels, oneOnOneStatusColors } from '@/lib/utils'
+import { AuthGuard } from '@/components/auth/auth-guard'
 
 export default function OneOnOnesPage() {
   const [searchTerm, setSearchTerm] = useState('')
@@ -62,7 +63,8 @@ export default function OneOnOnesPage() {
   }
 
   return (
-    <div className="space-y-4 sm:space-y-6 lg:space-y-8">
+    <AuthGuard>
+      <div className="space-y-4 sm:space-y-6 lg:space-y-8">
       <div className="bg-gradient-to-r from-brand-50 to-brand-100 rounded-2xl p-4 sm:p-6 lg:p-8 border border-brand-200">
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
           <div>
@@ -217,6 +219,7 @@ export default function OneOnOnesPage() {
           <p className="text-muted-foreground">該当する1on1記録が見つかりませんでした。</p>
         </div>
       )}
-    </div>
+      </div>
+    </AuthGuard>
   )
 }

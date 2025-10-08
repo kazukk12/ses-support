@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Users, Calendar, MessageSquare, AlertTriangle, BarChart3, ChevronDown, ChevronRight, ExternalLink } from 'lucide-react'
 import { api } from '@/lib/api'
 import { DashboardStats, SkillDistribution } from '@/types'
+import { AuthGuard } from '@/components/auth/auth-guard'
 
 export default function DashboardPage() {
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null)
@@ -45,7 +46,8 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="space-y-4 sm:space-y-6 lg:space-y-8">
+    <AuthGuard>
+      <div className="space-y-4 sm:space-y-6 lg:space-y-8">
       <div className="bg-gradient-to-r from-brand-50 to-brand-100 rounded-2xl p-4 sm:p-6 lg:p-8 border border-brand-200">
         <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-brand-800 mb-2">ダッシュボード</h1>
         <p className="text-brand-600 text-sm sm:text-base lg:text-lg">
@@ -241,6 +243,7 @@ export default function DashboardPage() {
           </CardContent>
         </Card>
       </div>
-    </div>
+      </div>
+    </AuthGuard>
   )
 }

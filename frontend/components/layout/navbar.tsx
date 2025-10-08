@@ -3,8 +3,10 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Menu, X } from 'lucide-react'
+import { useSession, signOut } from 'next-auth/react'
+import { Menu, X, LogOut, User } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { Button } from '@/components/ui/button'
 
 const navigation = [
   { name: 'ダッシュボード', href: '/dashboard' },
@@ -16,6 +18,7 @@ const navigation = [
 export function Navbar() {
   const pathname = usePathname()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const { data: session } = useSession()
 
   // パスが変更されたときにメニューを閉じる
   useEffect(() => {
@@ -55,50 +58,110 @@ export function Navbar() {
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <div className="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-r from-gray-300 to-gray-400 rounded-full flex items-center justify-center">
-              <span className="text-white text-xs sm:text-sm font-medium">U</span>
-            </div>
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="sm:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-600 hover:text-brand-600 hover:bg-brand-50 transition-colors duration-200"
-              aria-expanded="false"
-            >
-              <span className="sr-only">メニューを開く</span>
-              {isMenuOpen ? (
-                <X className="h-5 w-5" aria-hidden="true" />
-              ) : (
-                <Menu className="h-5 w-5" aria-hidden="true" />
-              )}
-            </button>
+            {session ? (
+              <>
+                <div className="hidden sm:flex items-center gap-3">
+                  <div className="flex items-center gap-2">
+                    {session.user?.image ? (
+                      <img
+                        src={session.user.image}
+                        alt={session.user.name || ''}
+                        className="w-7 h-7 sm:w-8 sm:h-8 rounded-full"
+                      />
+                    ) : (
+                      <div className="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-r from-brand-300 to-brand-400 rounded-full flex items-center justify-center">
+                        <User className="h-4 w-4 text-white" />
+                      </div>
+                    )}
+                    <span className="text-sm font-medium text-gray-700 hidden lg:block">
+                      {session.user?.name}
+                    </span>
+                  </div>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => signOut({ callbackUrl: '/auth/signin' })}
+                    className="flex items-center gap-2"
+                  >
+                    <LogOut className="h-4 w-4" />
+                    ログアウト
+                  </Button>
+                </div>
+                <button
+                  onClick={() => setIsMenuOpen(!isMenuOpen)}
+                  className="sm:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-600 hover:text-brand-600 hover:bg-brand-50 transition-colors duration-200"
+                  aria-expanded="false"
+                >
+                  <span className="sr-only">メニューを開く</span>
+                  {isMenuOpen ? (
+                    <X className="h-5 w-5" aria-hidden="true" />
+                  ) : (
+                    <Menu className="h-5 w-5" aria-hidden="true" />
+                  )}
+                </button>
+              </>
+            ) : (
+              <Button asChild>
+                <Link href="/auth/signin">ログイン</Link>
+              </Button>
+            )}
           </div>
         </div>
       </div>
 
       {/* モバイルメニュー */}
-      <div className={cn(
-        "sm:hidden transition-all duration-300 ease-in-out",
-        isMenuOpen
-          ? "max-h-96 opacity-100 border-t border-gray-100"
-          : "max-h-0 opacity-0 overflow-hidden"
-      )}>
-        <div className="px-4 py-3 space-y-1 bg-white shadow-lg">
-          {navigation.map((item) => (
-            <Link
-              key={item.name}
-              href={item.href}
-              onClick={() => setIsMenuOpen(false)}
-              className={cn(
-                pathname === item.href
-                  ? 'bg-brand-50 border-brand-500 text-brand-700 shadow-sm'
-                  : 'border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-800',
-                'block px-4 py-3 rounded-lg text-base font-medium border-l-4 transition-all duration-200'
-              )}
-            >
-              {item.name}
-            </Link>
-          ))}
+      {session && (
+        <div className={cn(
+          "sm:hidden transition-all duration-300 ease-in-out",
+          isMenuOpen
+            ? "max-h-96 opacity-100 border-t border-gray-100"
+            : "max-h-0 opacity-0 overflow-hidden"
+        )}>
+          <div className="px-4 py-3 space-y-1 bg-white shadow-lg">
+            {navigation.map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                onClick={() => setIsMenuOpen(false)}
+                className={cn(
+                  pathname === item.href
+                    ? 'bg-brand-50 border-brand-500 text-brand-700 shadow-sm'
+                    : 'border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-800',
+                  'block px-4 py-3 rounded-lg text-base font-medium border-l-4 transition-all duration-200'
+                )}
+              >
+                {item.name}
+              </Link>
+            ))}
+            <div className="border-t border-gray-200 pt-3 mt-3">
+              <div className="flex items-center gap-3 px-4 py-2 mb-3">
+                {session.user?.image ? (
+                  <img
+                    src={session.user.image}
+                    alt={session.user.name || ''}
+                    className="w-8 h-8 rounded-full"
+                  />
+                ) : (
+                  <div className="w-8 h-8 bg-gradient-to-r from-brand-300 to-brand-400 rounded-full flex items-center justify-center">
+                    <User className="h-4 w-4 text-white" />
+                  </div>
+                )}
+                <span className="text-sm font-medium text-gray-700">
+                  {session.user?.name}
+                </span>
+              </div>
+              <Button
+                variant="outline"
+                onClick={() => signOut({ callbackUrl: '/auth/signin' })}
+                className="w-full flex items-center justify-center gap-2"
+              >
+                <LogOut className="h-4 w-4" />
+                ログアウト
+              </Button>
+            </div>
+          </div>
         </div>
-      </div>
+      )}
     </nav>
   )
 }

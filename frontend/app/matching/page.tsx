@@ -10,6 +10,7 @@ import { Target, Settings, ClipboardList } from 'lucide-react'
 import { api } from '@/lib/api'
 import { ProjectMatchingRequest, ProjectMatchingResult, Skill } from '@/types'
 import { availabilityStatusLabels } from '@/lib/utils'
+import { AuthGuard } from '@/components/auth/auth-guard'
 
 export default function MatchingPage() {
   const [searchCriteria, setSearchCriteria] = useState<ProjectMatchingRequest>({
@@ -91,7 +92,8 @@ export default function MatchingPage() {
   }
 
   return (
-    <div className="space-y-4 sm:space-y-6 lg:space-y-8">
+    <AuthGuard>
+      <div className="space-y-4 sm:space-y-6 lg:space-y-8">
       <div className="bg-gradient-to-r from-brand-50 to-brand-100 rounded-2xl p-4 sm:p-6 lg:p-8 border border-brand-200">
         <div className="flex flex-col sm:flex-row sm:items-center space-y-3 sm:space-y-0 sm:space-x-4">
           <div className="w-12 h-12 bg-gradient-to-br from-brand-400 to-brand-600 rounded-xl flex items-center justify-center shadow-lg">
@@ -360,6 +362,7 @@ export default function MatchingPage() {
           </CardContent>
         </Card>
       </div>
-    </div>
+      </div>
+    </AuthGuard>
   )
 }
